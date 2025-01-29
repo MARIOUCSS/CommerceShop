@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import { FaBarsStaggered, FaRegCircleUser } from "react-icons/fa6";
@@ -8,13 +8,19 @@ import { FaSearch } from "react-icons/fa";
 function Header() {
   const [menuOpened, setMenuOpened] = useState(false);
   const [token, setToken] = useState(true);
+  const navigate = useNavigate();
   const ToogleMenu = () => {
     console.log("hola");
     setMenuOpened((prev) => !prev);
   };
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/login");
+  };
   return (
     <header className="py-5 w-full bg-white">
-      <div className="mx-auto max-w-[1440px] px-4 margin lg:px-12 flex items-center justify-between">
+      <div className="mx-auto max-w-[1600px] px-4 margin lg:px-12 flex items-center justify-between">
         {/* logo */}
         <Link to={"/"} className="font-bold flex-1 xl:hidden ">
           <h4
@@ -26,7 +32,11 @@ function Header() {
         </Link>
         {/* Navbar */}
         <div className="flex-1">
-          <Navbar />
+          <Navbar
+            menuOpened={menuOpened}
+            toggleMenu={ToogleMenu}
+            containerStyles={``}
+          />
         </div>
         {/* */}
         <Link to={"/"} className="font-bold flex-1 hidden xl:flex ">
@@ -59,15 +69,29 @@ function Header() {
             </span>
           </Link>
           <div className="group relative">
-            <div>
+            <div onClick={() => !token && navigate("/login")}>
               <FaRegCircleUser className="text-2xl cursor-pointer" />
             </div>
             {token && (
               <>
-                <ul className="bg-white shadow-sm p-3 w-32 ring-1 ring-slate-900/15 absolute right-0 flex-col">
-                  <li>
+                <ul
+                  className=" bg-white shadow-sm p-3 w-32 ring-1 ring-slate-900/15
+                 absolute right-0 flex-col hidden group-hover:flex"
+                >
+                  <li
+                    onClick={() => navigate("/orders")}
+                    className="flex items-center justify-between cursor-pointer"
+                  >
                     <p>Orders</p>
-                    <TbArrowNarrowRight />
+                    <TbArrowNarrowRight className="text-[19px] cursor-pointer" />
+                  </li>
+                  <hr className="my-2" />
+                  <li
+                    onClick={logout}
+                    className="flex items-center justify-between opacity-50"
+                  >
+                    <p>Logout</p>
+                    <TbArrowNarrowRight className="text-[19px] opacity-50" />
                   </li>
                 </ul>
               </>
