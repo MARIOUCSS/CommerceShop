@@ -7,6 +7,10 @@ export default {
         primary: "#f9f9f9",
         secondary: "#43c2d1",
       },
+      backgroundImage: {
+        hero: "url(/src/assets/bg.png)",
+        // banner: "url(/src/assets/banner.png)",
+      },
     },
   },
   plugins: [],
