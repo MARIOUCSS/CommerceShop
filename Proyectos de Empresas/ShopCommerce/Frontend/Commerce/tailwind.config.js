@@ -6,6 +6,7 @@ export default {
       colors: {
         primary: "#f9f9f9",
         secondary: "#43c2d1",
+        tertiary: "#404040",
       },
       backgroundImage: {
         hero: "url(/src/assets/bg.png)",
