@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 function Title({ title, titleStyles }) {
   return (
     <div className={`${titleStyles} pb-20`}>
@@ -7,5 +8,9 @@ function Title({ title, titleStyles }) {
     </div>
   );
 }
+Title.propTypes = {
+  title: PropTypes.string.isRequired, // 'title' debe ser una cadena y es requerido
+  titleStyles: PropTypes.string, // 'titleStyles' debe ser una cadena, pero no es obligatorio
+};
 
 export default Title;
