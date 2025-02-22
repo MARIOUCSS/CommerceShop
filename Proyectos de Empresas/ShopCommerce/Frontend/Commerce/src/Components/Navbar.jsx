@@ -2,6 +2,7 @@ import { FaRegWindowClose } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { SiGooglehome, SiAtlassian, SiMaildotcom } from "react-icons/si";
 import { BsCollectionFill } from "react-icons/bs";
+import PropTypes from "prop-types";
 function Navbar({ menuOpened, toggleMenu, containerStyles }) {
   const navItems = [
     { to: "/", label: "Home", icon: <SiGooglehome /> },
@@ -46,5 +47,9 @@ function Navbar({ menuOpened, toggleMenu, containerStyles }) {
     </nav>
   );
 }
-
+Navbar.propTypes = {
+  menuOpened: PropTypes.bool.isRequired, // menuOpened debe ser un booleano y es obligatorio
+  toggleMenu: PropTypes.func.isRequired, // toggleMenu debe ser una función y es obligatorio
+  containerStyles: PropTypes.object, // containerStyles debe ser un objeto (puede no ser obligatorio si no es necesario)
+};
 export default Navbar;

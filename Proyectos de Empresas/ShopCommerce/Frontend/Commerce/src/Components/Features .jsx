@@ -1,5 +1,6 @@
 import Title from "./Title";
-import { TbArrowBackUp } from "react-icons/tb";
+import { TbArrowBackUp, TbTruckDelivery } from "react-icons/tb";
+import { RiSecurePaymentLine } from "react-icons/ri";
 function Features() {
   return (
     <section className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16">
@@ -16,7 +17,7 @@ function Features() {
           </p>
         </div>
         <div className="p-4 bg-white rounded-3xl">
-          <TbArrowBackUp className="bold-32 mb-3 text-yellow-400" />
+          <TbTruckDelivery className="bold-32 mb-3 text-secondary" />
           <h4 className="text-[16px] md:text-[17px] mb-2 font-bold">
             Fast Delivery
           </h4>
@@ -26,7 +27,7 @@ function Features() {
           </p>
         </div>
         <div className="p-4 bg-white rounded-3xl">
-          <TbArrowBackUp className="bold-32 mb-3 text-yellow-400" />
+          <RiSecurePaymentLine className="bold-32 mb-3 text-red-500" />
           <h4 className="text-[16px] md:text-[17px] mb-2 font-bold">
             Secure Payment
           </h4>
