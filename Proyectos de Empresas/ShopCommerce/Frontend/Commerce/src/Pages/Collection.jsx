@@ -5,13 +5,22 @@ import Item from "../Components/Item";
 //import { products } from "../assets/data";
 
 function Collection() {
+  // "Women", "Topwear", "Winterwear"
   const { products } = useGlobalState();
   const [filterProduct, setfilterProduct] = useState([]);
-  const [category, setCateogory] = useState([]);
+  const [category, setCategory] = useState([]);
   const [subcategory, setSubcategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
+  const tooglefilter = (value, setState) => {
+    setState((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
   const applyFilter = () => {
     let filtered = [...products];
+    //Si hay un producto
     if (category.length) {
       filtered = filtered.filter((prod) => category.includes(prod.category));
     }
@@ -33,11 +42,18 @@ function Collection() {
         return productList;
     }
   };
+
   useEffect(() => {
-    let filtered = applyFilter();
-    let sorted = applySorting();
-    setfilterProduct(sorted);
+    //primero entra los products por completo cuando inicia no tiene nada filtrado
+    //y carga completo los productos
+    let apply = applyFilter();
+    //despues entra por apply sortin pero como esta en relevant
+    // devuelve los productos sin el preico menor a mayor al menos qu cambie ahu se modifica
+
+    let productf = applySorting(apply);
+    setfilterProduct(productf);
   }, [category, subcategory, sortType, products]);
+
   return (
     <section className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16">
       <div className="flex flex-col sm:flex-row gap-8 mt-8 xl:mt-6">
@@ -48,7 +64,12 @@ function Collection() {
             <div className="flex flex-col gap-2 text-sm font-light">
               {["Men", "Women", "Kids"].map((cat) => (
                 <label key={cat} className="flex gap-2 medium-14 ">
-                  <input type="checkbox" value={cat} className="w-5" />
+                  <input
+                    onChange={(e) => tooglefilter(e.target.value, setCategory)}
+                    type="checkbox"
+                    value={cat}
+                    className="w-5"
+                  />
                   {cat}
                 </label>
               ))}
