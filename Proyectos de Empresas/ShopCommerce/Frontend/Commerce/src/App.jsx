@@ -10,10 +10,12 @@ import Login from "./Pages/Login";
 import PlaceOrder from "./Pages/PlaceOrder";
 import Orders from "./Pages/Orders";
 import Verify from "./Pages/Verify";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 export default function App() {
   return (
     <div className="overflow-hidden bg-primary">
+      <ToastContainer />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

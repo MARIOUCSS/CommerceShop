@@ -5,12 +5,13 @@ import { FaBarsStaggered, FaRegCircleUser } from "react-icons/fa6";
 import { GiBeachBag } from "react-icons/gi";
 import { TbArrowNarrowRight } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
+import { useGlobalState } from "../Context/ShopContext";
 function Header() {
+  const { setShowSearch, GetCartCount } = useGlobalState();
   const [menuOpened, setMenuOpened] = useState(false);
   const [token, setToken] = useState(true);
   const navigate = useNavigate();
   const ToogleMenu = () => {
-    console.log("hola");
     setMenuOpened((prev) => !prev);
   };
   const logout = () => {
@@ -61,7 +62,10 @@ function Header() {
             />
           )}
           <div>
-            <FaSearch className="text-xl cursor-pointer" />
+            <FaSearch
+              onClick={() => setShowSearch((prev) => !prev)}
+              className="text-xl cursor-pointer"
+            />
           </div>
           <Link to={"/cart"} className="flex relative">
             <GiBeachBag className="text-[25px]" />
@@ -69,7 +73,7 @@ function Header() {
               className="bg-secondary text-white text-[14px] font-[400]
  absolute right-0.5 -top-3 flex items-center justify-center w-5 h-5 rounded-full shadow-inner"
             >
-              0
+              {GetCartCount()}
             </span>
           </Link>
           <div className="group relative">
