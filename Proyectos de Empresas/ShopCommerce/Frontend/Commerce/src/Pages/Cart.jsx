@@ -10,7 +10,8 @@ import { FaMinus, FaPlus, FaRegWindowClose } from "react-icons/fa";
 // {S: 1, XXL: 1}
 function Cart() {
   // , products, currency,
-  const { GetCartCount, products, currency, cartItems } = useGlobalState();
+  const { GetCartCount, products, currency, cartItems, updateQuantity } =
+    useGlobalState();
   const [cartData, setCartData] = useState([]);
   const [quantities, setquantities] = useState({});
   useEffect(() => {
@@ -38,7 +39,19 @@ function Cart() {
     const key = `${id}-${size}`;
     // {2-L:1 ,1-M:1}
     const newValue = quantities[key] + 1;
+
     setquantities((prev) => ({ ...prev, [key]: newValue }));
+    updateQuantity(id, size, newValue);
+  };
+  const Decrement = (id, size) => {
+    const key = `${id}-${size}`;
+    // {2-L:1 ,1-M:1}
+    if (quantities[key] > 1) {
+      const newValue = quantities[key] - 1;
+
+      setquantities((prev) => ({ ...prev, [key]: newValue }));
+      updateQuantity(id, size, newValue);
+    }
   };
   return (
     <section>
@@ -71,17 +84,26 @@ function Cart() {
                     <div className="flex flex-col w-full">
                       <div className="flex items-center justify-between">
                         <h5>{ProductData.name}</h5>
-                        <FaRegWindowClose className="text-secondary" />
+                        <FaRegWindowClose
+                          onClick={() => updateQuantity(item._id, item.size, 0)}
+                          className="text-secondary"
+                        />
                       </div>
                       <p className="bold-14 my-0.5">{item.size}</p>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center ring-1 rounded-full overflow-hidden">
                           <button className="p-1.5 bg-white text-secondary rounded-full shadow-md">
-                            <FaMinus className="text-xs  cursor-pointer" />
+                            <FaMinus
+                              onClick={() => Decrement(item._id, item.size)}
+                              className="text-xs  cursor-pointer"
+                            />
                           </button>
                           <p className="px-2">{quantities[key]}</p>
                           <button className="p-1.5 bg-white text-secondary rounded-full shadow-md">
-                            <FaPlus className="text-xs cursor-pointer" />
+                            <FaPlus
+                              onClick={() => Increment(item._id, item.size)}
+                              className="text-xs cursor-pointer"
+                            />
                           </button>
                         </div>
                         <h4 className="text-[16px] md:text-[17px] mb-2 font-bold">
@@ -95,6 +117,11 @@ function Cart() {
                 </div>
               );
             })}
+          </div>
+          <div>
+            <div>
+              <CartTotal />
+            </div>
           </div>
         </div>
       </div>

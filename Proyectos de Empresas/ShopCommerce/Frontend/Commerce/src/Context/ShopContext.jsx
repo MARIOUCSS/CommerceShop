@@ -58,6 +58,11 @@ export const GlobalProvider = (props) => {
     }
     return total;
   };
+  const updateQuantity = (itemId, size, quantity) => {
+    let cartdata = structuredClone(cartItems);
+    cartdata[itemId][size] = quantity;
+    setcartItems(cartdata);
+  };
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
@@ -72,6 +77,7 @@ export const GlobalProvider = (props) => {
     AddToCart,
     GetCartCount,
     cartItems,
+    updateQuantity,
   };
   return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
