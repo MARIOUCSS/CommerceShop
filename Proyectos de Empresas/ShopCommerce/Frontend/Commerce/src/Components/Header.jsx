@@ -76,7 +76,11 @@ function Header() {
               {GetCartCount()}
             </span>
           </Link>
+          {/* Al padre ese pone group y al hijo se pone  */}
           <div className="group relative">
+            {/* 
+token es false  en true pero tiene que estar escondio group-hover:flex
+            / */}
             <div onClick={() => !token && navigate("/login")}>
               <FaRegCircleUser className="text-2xl cursor-pointer" />
             </div>

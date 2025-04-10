@@ -8,8 +8,8 @@ function RelativeProducts({ category, subcategory }) {
   const { products } = useGlobalState();
   const [related, setRelated] = useState([]);
   useEffect(() => {
-    console.log(category);
-    console.log(subcategory);
+    // console.log(category);
+    // console.log(subcategory);
     if (products.length > 0 && category && subcategory) {
       let filtered = products.slice();
       filtered = filtered.filter((item) => item.category === category);

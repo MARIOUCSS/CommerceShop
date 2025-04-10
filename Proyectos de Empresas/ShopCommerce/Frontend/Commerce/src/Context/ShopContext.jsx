@@ -3,6 +3,7 @@ import { products } from "../assets/data.js";
 import PropTypes from "prop-types"; // Importa PropTypes
 //import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export const Context = createContext();
 
 export const useGlobalState = () => {
@@ -16,6 +17,7 @@ export const GlobalProvider = (props) => {
   const [cartItems, setcartItems] = useState({});
   const currency = "S";
   const delivery_changes = 10;
+  const navigate = useNavigate();
 
   const AddToCart = (ItemId, size) => {
     if (!size) {
@@ -63,8 +65,29 @@ export const GlobalProvider = (props) => {
     cartdata[itemId][size] = quantity;
     setcartItems(cartdata);
   };
+
+  const GetCartAmonut = () => {
+    let Totalamount = 0;
+
+    for (const items in cartItems) {
+      let Iteminfo = products.find((x) => x._id === items);
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            Totalamount += cartItems[items][item] * Iteminfo.price;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    return Totalamount;
+  };
   useEffect(() => {
-    console.log(cartItems);
+    // console.log("aqui");
+    // console.log(cartItems);
+    // //console.log();
+    // console.log(GetCartAmonut());
   }, [cartItems]);
   const value = {
     products,
@@ -78,6 +101,8 @@ export const GlobalProvider = (props) => {
     GetCartCount,
     cartItems,
     updateQuantity,
+    GetCartAmonut,
+    navigate,
   };
   return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };

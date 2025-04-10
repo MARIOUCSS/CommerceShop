@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalState } from "../Context/ShopContext";
 import { FaMinus, FaPlus, FaRegWindowClose } from "react-icons/fa";
+import CartTotal from "../Components/CartTotal";
 // {2: {…}, 4: {…}}
 // 2
 // :
@@ -10,8 +11,14 @@ import { FaMinus, FaPlus, FaRegWindowClose } from "react-icons/fa";
 // {S: 1, XXL: 1}
 function Cart() {
   // , products, currency,
-  const { GetCartCount, products, currency, cartItems, updateQuantity } =
-    useGlobalState();
+  const {
+    GetCartCount,
+    products,
+    currency,
+    cartItems,
+    updateQuantity,
+    navigate,
+  } = useGlobalState();
   const [cartData, setCartData] = useState([]);
   const [quantities, setquantities] = useState({});
   useEffect(() => {
@@ -119,8 +126,16 @@ function Cart() {
             })}
           </div>
           <div>
-            <div>
+            <div className="w-[450px] mt-8 ">
               <CartTotal />
+              {cartData && cartData.length ? (
+                <button
+                  onClick={() => navigate("/place-order")}
+                  className="medium-14 bg-secondary text-white px-7 py-3 rounded-lg transition-all mt-7"
+                >
+                  Proceed To Checkout
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
